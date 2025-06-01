@@ -1,0 +1,117 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}About - College Cultural Events{% endblock %}
+
+{% block content %}
+<!-- About Header -->
+<div class="bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h1 class="display-4">About Us</h1>
+                <p class="lead">Learn more about our college cultural events and our mission</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About Content -->
+<div class="container py-3">
+    <div class="row">
+        <div class="col-lg-5 mb-3 mb-lg-0">
+            <img src="{% static 'img/about.jpeg' %}" alt="College Cultural Event" class="img-fluid about-img "  width="350px">
+        </div>
+        <div class="col-lg-7">
+            <h2 class="mb-4  ">Our Story</h2>
+            <p class="lead">Celebrating talent, creativity, and cultural diversity through events and performances.</p>
+            <p>Anandutsav is the heart and soul of our college’s cultural celebrations, a festival that brings together talent, tradition, and togetherness. For the past 10 years, this grand event has been the biggest and most awaited festival on campus, setting new benchmarks of excitement and creativity every year.</p>
+            <p>From electrifying music and dance performances to mind-blowing art, drama, and literary events, Anandutsav is a platform where students showcase their skills and passion. The festival is a fusion of cultures, traditions, and modern expressions, making it an unforgettable experience for participants and audiences alike.</p>     
+            <p>With each passing year, Anandutsav grows bigger and better, uniting students, faculty, and alumni in a vibrant celebration of art, culture, and creativity. Whether you’re here to compete, perform, or simply soak in the festive spirit, Anandutsav promises memories that last a lifetime!</p>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4  ">Our Mission</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-star fa-3x text-primary"></i>
+                    </div>
+                    <h4>Promote Talent</h4>
+                    <p>We provide a platform for students to showcase their talents and creative abilities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-globe fa-3x text-primary"></i>
+                    </div>
+                    <h4>Celebrate Diversity</h4>
+                    <p>We celebrate cultural diversity and promote understanding among different communities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-handshake fa-3x text-primary"></i>
+                    </div>
+                    <h4>Build Community</h4>
+                    <p>We bring students together to create lasting friendships and a sense of belonging.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4 ">Our Team</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="{% static 'img/principal_mam.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body text-center">
+                    <h5>Dr. Harshala Likhite</h5>
+                    <p class="text-muted">Principal</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="{% static 'img/rupesh_sir.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body text-center">
+                    <h5>Rupesh Dhruvanshi</h5>
+                    <p class="text-muted">Event Manager</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="{% static 'img/rashmi_mam.jpeg' %}" class="card-img-top" alt="Team Member">
+                <div class="card-body text-center">
+                    <h5>Rashmi Waghmare</h5>
+                    <p class="text-muted">Events incharge</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Join Us CTA -->
+<div class="bg-light py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Join Our Cultural Events</h2>
+        <p class="lead mb-4">Be a part of our vibrant cultural community! Register for upcoming events or volunteer to help organize them.</p>
+        <div>
+            <a href="{% url 'event_list' %}" class="btn btn-primary me-2 mb-2">Explore Events</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline-primary mb-2">Contact Us</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

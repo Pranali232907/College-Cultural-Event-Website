@@ -1,0 +1,115 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}{{ media.title }} - Media Gallery{% endblock %}
+
+{% block content %}
+<!-- Media Detail Header -->
+<div class="bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h1 class="display-4">{{ media.title }}</h1>
+                {% if media.event %}
+                    <p class="lead">
+                        From the event: <a href="{% url 'event_detail' media.event.id %}" class="text-white">{{ media.event.title }}</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Media Detail Content -->
+<div class="container py-5">
+    <div class="row">
+        <!-- Media Image -->
+        <div class="col-lg-8 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <img src="{{ media.image.url }}" alt="{{ media.title }}" class="img-fluid gallery-item">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Media Info -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Description</h3>
+                    <p>{{ media.description }}</p>
+                    
+                    <hr>
+                    
+                    <h5>Details</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="far fa-calendar-alt me-2 text-primary"></i> 
+                            Uploaded on {{ media.upload_date|date:"F d, Y" }}
+                        </li>
+                        {% if media.event %}
+                            <li class="mb-2">
+                                <i class="fas fa-link me-2 text-primary"></i> 
+                                <a href="{% url 'event_detail' media.event.id %}">{{ media.event.title }}</a>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i> 
+                                {{ media.event.location }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ media.image.url }}" download class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i> Download Image
+                        </a>
+                        <a href="{% url 'media_list' %}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Gallery
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Share Section -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Share this</h4>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn-outline-primary me-2">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-info me-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-success me-2">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Media -->
+    {% if related_media %}
+        <h3 class="mt-5 mb-4">Related Media</h3>
+        <div class="row media-gallery">
+            {% for item in related_media %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'media_detail' item.id %}" class="gallery-item">
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.description|truncatechars:50 }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

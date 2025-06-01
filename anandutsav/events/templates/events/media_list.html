@@ -1,0 +1,122 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}Media Gallery - College Cultural Events{% endblock %}
+
+{% block content %}
+<!-- Media Header -->
+<div class="bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h1 class="display-4">Event Gallery</h1>
+                <p class="lead">Explore our vibrant cultural events through pictures</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Filters -->
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'media_list' %}" 
+                   class="btn btn-outline-primary {% if not request.GET.category %}active{% endif %}">
+                    All Categories
+                </a>
+                {% for category in media_categories %}
+                <a href="{% url 'media_list' %}?category={{ category.name }}" 
+                   class="btn btn-outline-primary {% if request.GET.category == category.name %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Media Gallery -->
+<div class="container py-3">
+    {% if media %}
+    <div class="row g-4">
+        {% for item in media %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="media-card">
+                <a href="{% url 'media_detail' item.id %}">
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <div class="media-overlay">
+                        <h3>{{ item.title }}</h3>
+                        {% if item.category %}
+                        <span class="badge bg-light text-dark">{{ item.category.name }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <h4>No media found for this category</h4>
+        <p>Try selecting a different category</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.media-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    height: 250px;
+    cursor: pointer;
+}
+
+.media-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.media-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.media-card:hover img {
+    transform: scale(1.1);
+}
+
+.media-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2), transparent);
+    padding: 20px 15px;
+    color: white;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.media-card:hover .media-overlay {
+    transform: translateY(-10px);
+}
+
+.media-overlay h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.row.g-4 {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
+}
+</style>
+{% endblock %}

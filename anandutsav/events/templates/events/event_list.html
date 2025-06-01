@@ -1,0 +1,98 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}Events - College Cultural Events{% endblock %}
+
+{% block content %}
+<!-- Events Header -->
+<div class="bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h1 class="display-4">Our Events</h1>
+                <p class="lead">Explore and register for our exciting cultural events</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Events Content -->
+<div class="container py-4">
+    <!-- All Events Listing -->
+    <h2 class="text-center mb-4">All Upcoming Events</h2>
+    <div class="row">
+        {% if events %}
+            {% for event in events %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 event-card">
+                        <img src="{% if event.title == 'Dance' %}https://i.pinimg.com/736x/ce/c2/b3/cec2b3dc301f1dc48f7ac417196ffed4.jpg
+                        {% elif event.title == 'Tshirt Painting'  %}https://i.pinimg.com/736x/55/f4/ab/55f4ab5bb26c0760bb3162c9febc783b.jpg
+                        {% elif event.title == 'Rangoli'  %}https://i.pinimg.com/736x/63/de/8d/63de8dd3a05f2a32338ae4980ba22fcb.jpg
+                        {% elif event.title == 'Nail Art'  %}https://i.pinimg.com/736x/96/0e/a9/960ea9cf7655e80d9c3f3130389a1f5d.jpg
+                        {% elif event.title == 'Face Painting'  %}https://i.pinimg.com/736x/69/cc/79/69cc7936d5e1e38eff9931f45feeacb0.jpg
+                        {% elif event.title == 'Singing'  %}https://i.pinimg.com/736x/9a/cb/41/9acb41fbba59ef9b6814eebd6945756f.jpg
+                        {% elif event.title == 'Instrument Playing'  %}https://i.pinimg.com/736x/6a/e6/97/6ae6975a377c974ffacc1b979ba75ba3.jpg
+                        {% elif event.title == 'Fashion Show'  %}https://i.pinimg.com/736x/9d/45/60/9d4560df9f47ac863ea49dfa1a136c98.jpg
+                        {% elif event.title == 'Glam Up'  %}https://i.pinimg.com/736x/96/db/5e/96db5ea1e9e72b85ecd6b19298e6bb61.jpg
+                        {% elif event.title == 'Mehendi'  %}https://i.pinimg.com/736x/9f/1a/29/9f1a299bf3e51c5e6944ca6d36b467da.jpg
+                        {% elif event.title == 'Photography'  %}https://i.pinimg.com/736x/66/f1/e3/66f1e3ab1cf6e0044b7deeff1142b558.jpg
+                        {% elif event.title == 'Cooking Without Fire'  %}https://i.pinimg.com/736x/a8/ab/28/a8ab28528fbf4db8e9b9bc71ef7f72ef.jpg
+                        {% elif event.title == 'Treasure Hunt'  %}https://i.pinimg.com/736x/76/5d/97/765d97d834aa697dfcbdb38c869ec074.jpg
+                        {%elif event.title == 'Indo-Western Day'  %}https://i.pinimg.com/736x/e3/13/6c/e3136c2b678222dcca157cdf777e101f.jpg
+                        {% elif event.title == 'Bollywood Day'  %}https://i.pinimg.com/736x/ac/4d/7c/ac4d7cb8818d9967bc55ee478baf5784.jpg
+                        {% elif event.title == 'Group-Alike Day'  %}https://i.pinimg.com/736x/12/c2/cd/12c2cdbc569d18ee41d22a082865d055.jpg{% endif %}" class="card-img-top" alt="{{ event.title }}">
+                        <div class="card-body">
+                            <div class="badge bg-primary mb-2">{{ event.category.name }}</div>
+                            <h5 class="card-title mb-3">{{ event.title }}</h5>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="far fa-calendar-alt text-muted me-2"></i>
+                                <span>{{ event.date|date:"F d, Y - g:i A" }}</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-map-marker-alt text-muted me-2"></i>
+                                <span>{{ event.location }}</span>
+                            </div>
+                            <p class="card-text">{{ event.description|truncatechars:120 }}</p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <a href="{% url 'event_detail' event.id %}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-info-circle me-1"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center mb-5">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No events are currently scheduled. Check back soon for upcoming events!
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.event-card {
+    transition: transform 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.event-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-detail-icon {
+    width: 16px;
+    text-align: center;
+    margin-right: 8px;
+}
+</style>
+{% endblock %} 

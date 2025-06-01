@@ -1,0 +1,25 @@
+from django.db import migrations, models
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('events', '0002_add_event_categories'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='MediaCategory',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=100)),
+                ('description', models.TextField(blank=True)),
+            ],
+            options={
+                'verbose_name_plural': 'Media Categories',
+            },
+        ),
+        migrations.AddField(
+            model_name='media',
+            name='category',
+            field=models.ForeignKey(blank=True, null=True, on_delete=models.CASCADE, related_name='media', to='events.mediacategory'),
+        ),
+    ] 

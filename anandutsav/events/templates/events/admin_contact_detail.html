@@ -1,0 +1,126 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}Admin - Contact Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0">Contact Message Details</h2>
+                        <a href="{% url 'admin_contact_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to List
+                        </a>
+                    </div>
+
+                    {% if messages %}
+                        <div class="messages mb-4">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="contact-details mb-4">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Name:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {{ contact.name }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Email:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {{ contact.email }}
+                            </div>
+                        </div>
+                        {% if contact.phone %}
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <strong>Phone:</strong>
+                                </div>
+                                <div class="col-md-9">
+                                    {{ contact.phone }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Subject:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {{ contact.subject }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Message:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {{ contact.message|linebreaks }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Date:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {{ contact.submission_date|date:"F d, Y - g:i A" }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <strong>Status:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                {% if contact.resolved %}
+                                    <span class="badge bg-success">Resolved</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if not contact.resolved %}
+                        <div class="response-form">
+                            <h4 class="mb-3">Send Response</h4>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="id_response" class="form-label">Response Message</label>
+                                    <textarea name="response" id="id_response" class="form-control" rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Response
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="response-details">
+                            <h4 class="mb-3">Response Details</h4>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="mb-2"><strong>Responded by:</strong> {{ contact.resolved_by.get_full_name|default:contact.resolved_by.username }}</p>
+                                    <p class="mb-2"><strong>Response date:</strong> {{ contact.resolution_date|date:"F d, Y - g:i A" }}</p>
+                                    <p class="mb-0"><strong>Response:</strong></p>
+                                    {{ contact.response|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

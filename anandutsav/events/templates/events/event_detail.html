@@ -1,0 +1,221 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}{{ event.title }} - College Cultural Events{% endblock %}
+
+{% block content %}
+<!-- Event Header -->
+<div class="event-header py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4">{{ event.title }}</h1>
+                <p class="lead mb-0">
+                    <span class="badge bg-light text-dark me-2">
+                        <i class="fas fa-bookmark me-1"></i>{{ event.category.name }}
+                    </span>
+                    <span class="badge bg-light text-dark">
+                        <i class="far fa-calendar-alt me-1"></i>{{ event.date|date:"F d, Y" }}
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Event Content -->
+<div class="container py-5">
+    <div class="row">
+        <!-- Event Details -->
+        <div class="col-lg-8">
+            <div class="card mb-4 border-0 shadow-sm">
+                <img src="{% if event.title == 'Dance'%}https://i.pinimg.com/736x/ce/c2/b3/cec2b3dc301f1dc48f7ac417196ffed4.jpg
+                {% elif event.title == 'Tshirt Painting'%}https://i.pinimg.com/736x/55/f4/ab/55f4ab5bb26c0760bb3162c9febc783b.jpg
+                {% elif event.title == 'Rangoli'%}https://i.pinimg.com/736x/63/de/8d/63de8dd3a05f2a32338ae4980ba22fcb.jpg
+                {% elif event.title == 'Nail Art'%}https://i.pinimg.com/736x/96/0e/a9/960ea9cf7655e80d9c3f3130389a1f5d.jpg
+                {% elif event.title == 'Face Painting'%}https://i.pinimg.com/736x/69/cc/79/69cc7936d5e1e38eff9931f45feeacb0.jpg
+                {% elif event.title == 'Singing'%}https://i.pinimg.com/736x/9a/cb/41/9acb41fbba59ef9b6814eebd6945756f.jpg
+                {% elif event.title == 'Instrument Playing'%}https://i.pinimg.com/736x/6a/e6/97/6ae6975a377c974ffacc1b979ba75ba3.jpg
+                {% elif event.title == 'Fashion Show'%}https://i.pinimg.com/736x/9d/45/60/9d4560df9f47ac863ea49dfa1a136c98.jpg
+                {% elif event.title == 'Glam Up'%}https://i.pinimg.com/736x/96/db/5e/96db5ea1e9e72b85ecd6b19298e6bb61.jpg
+                {% elif event.title == 'Mehendi'%}https://i.pinimg.com/736x/9f/1a/29/9f1a299bf3e51c5e6944ca6d36b467da.jpg
+                {% elif event.title == 'Photography'%}https://i.pinimg.com/736x/66/f1/e3/66f1e3ab1cf6e0044b7deeff1142b558.jpg
+                {% elif event.title == 'Cooking Without Fire'%}https://i.pinimg.com/736x/a8/ab/28/a8ab28528fbf4db8e9b9bc71ef7f72ef.jpg
+                {% elif event.title == 'Treasure Hunt'%}https://i.pinimg.com/736x/76/5d/97/765d97d834aa697dfcbdb38c869ec074.jpg
+                {% elif event.title == 'Indo-Western Day'  %}https://i.pinimg.com/736x/e3/13/6c/e3136c2b678222dcca157cdf777e101f.jpg
+                {% elif event.title == 'Bollywood Day'  %}https://i.pinimg.com/736x/ac/4d/7c/ac4d7cb8818d9967bc55ee478baf5784.jpg
+                {% elif event.title == 'Group-Alike Day'  %}https://i.pinimg.com/736x/12/c2/cd/12c2cdbc569d18ee41d22a082865d055.jpg{% endif %}" class="card-img-top" alt="{{ event.title }}">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Event Details</h3>
+                    
+                    <div class="event-details">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="far fa-calendar-alt fa-lg event-detail-icon"></i>
+
+                            <div>
+                                <h6 class="mb-0">Date & Time</h6>
+                                <p class="mb-0">{{ event.date|date:"F d, Y - g:i A" }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt fa-lg event-detail-icon"></i>
+                            <div>
+                                <h6 class="mb-0">Location</h6>
+                                <p class="mb-0">{{ event.location }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-tag fa-lg event-detail-icon"></i>
+                            <div>
+                                <h6 class="mb-0">Category</h6>
+                                <p class="mb-0">{{ event.category.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mb-3">Description</h4>
+                    <p>{{ event.description }}</p>
+                    
+                    {% if event.rules %}
+                        <h4 class="mb-3">Rules & Guidelines</h4>
+                        <div class="card bg-light border-0 mb-4">
+                            <div class="card-body">
+                                {{ event.rules|linebreaks }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Reviews Section -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Reviews & Feedback</h3>
+                    
+                    {% if user.is_authenticated and not user.is_staff %}
+                        <div class="mb-4">
+                            <h5>Share Your Experience</h5>
+                            <form method="post" action="{% url 'add_review' event.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="id_content" class="form-label">Your Review</label>
+                                    <textarea class="form-control" id="id_content" name="content" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_rating" class="form-label">Rating</label>
+                                    <select class="form-select" id="id_rating" name="rating" required>
+                                        <option value="" selected disabled>Choose rating</option>
+                                        <option value="5">5 - Excellent</option>
+                                        <option value="4">4 - Very Good</option>
+                                        <option value="3">3 - Good</option>
+                                        <option value="2">2 - Fair</option>
+                                        <option value="1">1 - Poor</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Review Listings -->
+                    <div class="reviews-list">
+                        {% if reviews %}
+                            {% for review in reviews %}
+                                <div class="review-card">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="mb-0">{{ review.user.first_name|default:review.user.username }}</h5>
+                                        <div class="star-rating" data-rating="{{ review.rating }}">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted small mb-2">{{ review.created_at|date:"F d, Y" }}</p>
+                                    <p>{{ review.content }}</p>
+                                    <hr>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-4">
+                                <p>No reviews yet. Be the first to share your experience!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Event Sidebar -->
+        <div class="col-lg-4">
+            <!-- Registration Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3">Registration</h4>
+                    
+                    {% if not user.is_authenticated %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> Please <a href="{% url 'login' %}?next={{ request.path }}">login</a> to register for this event.
+                        </div>
+                    {% elif user.is_staff %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> Admin users cannot register for events.
+                        </div>
+                    {% else %}
+                        {% if is_registered %}
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i> You are registered for this event!
+                            </div>
+                            <p>We look forward to seeing you at the event.</p>
+                        {% else %}
+                            <form method="post" action="{% url 'register_for_event' event.id %}">
+                                {% csrf_token %}
+                                {{ registration_form }}
+                                <button type="submit" class="btn btn-primary w-100 mt-3">Register Now</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Organizer Info -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3">Event Organizer</h4>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-3x me-3 text-primary"></i>
+                        <div>
+                            <h5 class="mb-0">College Cultural Committee</h5>
+                            <p class="text-muted mb-0">Main Organizer</p>
+                        </div>
+                    </div>
+                    <p>For any queries related to this event, please contact:</p>
+                    <p><i class="fas fa-envelope event-detail-icon"></i> events@college.edu</p>
+                    <p><i class="fas fa-phone event-detail-icon"></i> (123) 456-7890</p>
+                </div>
+            </div>
+            
+            <!-- Share Event -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3">Share Event</h4>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn-outline-primary me-2">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-info me-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-success me-2">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

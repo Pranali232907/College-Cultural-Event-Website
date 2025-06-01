@@ -1,0 +1,66 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}My Registrations - College Cultural Events{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">My Event Registrations</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% if registrations %}
+                <div class="row">
+                    {% for registration in registrations %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ registration.event.title }}</h5>
+                                    <p class="card-text text-muted">
+                                        <i class="far fa-calendar-alt me-2"></i>
+                                        {{ registration.event.date|date:"F d, Y - g:i A" }}
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        {{ registration.event.location }}
+                                    </p>
+                                    <p class="card-text text-muted small">
+                                        Registered on: {{ registration.registration_date|date:"F d, Y" }}
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-white border-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{% url 'event_detail' registration.event.id %}" class="btn btn-primary">
+                                            View Event
+                                        </a>
+                                        <form method="post" action="{% url 'cancel_registration' registration.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to cancel this registration?')">
+                                                Cancel Registration
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    You haven't registered for any events yet.
+                    <a href="{% url 'event_list' %}" class="alert-link">Browse available events</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

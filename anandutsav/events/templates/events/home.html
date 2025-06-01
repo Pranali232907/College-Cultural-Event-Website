@@ -1,0 +1,214 @@
+{% extends 'events/base.html' %}
+{% load static %}
+{% block title %}Home - College Cultural Events{% endblock %}
+
+{% block content %}
+<!-- Carousel Section -->
+<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
+    </div>
+    
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://i.pinimg.com/736x/7b/83/48/7b83481a4cf0c574be1e71dd0294121e.jpg" class="d-block w-100" alt="Cultural Event">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>MOMENTS THAT DEFINE US !</h2>
+                <p>Where Friendships Flourish, Talent Shine and Memories Last Forever</p>
+                <a href="{% url 'event_list' %}" class="btn btn-success">Explore Events</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.pinimg.com/736x/fc/4b/79/fc4b7979b5310698b585bfce4ead1a4a.jpg" class="d-block w-100" alt="Dance Event">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>WHERE MEMORIES ARE MADE !</h2>
+                <p>It's Not The Place, It's The Moments that Make It Special</p>
+                <a href="{% url 'event_list' %}" class="btn btn-success">View Schedule</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.pinimg.com/736x/1d/09/7c/1d097c3b85850a2e7d6318c87e9b6f1b.jpg" class="d-block w-100" alt="Art Exhibition">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>WHERE DIVERSITY MEETS UNITY !</h2>
+                <p>Diversity Is The Art Of Thinking Independently Together</p>
+                <a href="{% url 'event_list' %}" class="btn btn-success">Learn More</a>
+            </div>
+        </div>
+    </div>
+    
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- Featured Events Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3 title">Upcoming Events</h2>
+                <p class="lead">Don't miss out on these exciting cultural events happening at our college!</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if events %}
+                {% for event in events %}
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <img src="{% if event.title == 'Dance' %}https://i.pinimg.com/736x/ce/c2/b3/cec2b3dc301f1dc48f7ac417196ffed4.jpg
+                            {% elif event.title == 'Tshirt Painting'  %}https://i.pinimg.com/736x/55/f4/ab/55f4ab5bb26c0760bb3162c9febc783b.jpg
+                            {% elif event.title == 'Rangoli'  %}https://i.pinimg.com/736x/63/de/8d/63de8dd3a05f2a32338ae4980ba22fcb.jpg
+                            {% elif event.title == 'Nail Art'  %}https://i.pinimg.com/736x/96/0e/a9/960ea9cf7655e80d9c3f3130389a1f5d.jpg
+                            {% elif event.title == 'Face Painting'  %}https://i.pinimg.com/736x/69/cc/79/69cc7936d5e1e38eff9931f45feeacb0.jpg
+                            {% elif event.title == 'Singing'  %}https://i.pinimg.com/736x/9a/cb/41/9acb41fbba59ef9b6814eebd6945756f.jpg
+                            {% elif event.title == 'Instrument Playing'  %}https://i.pinimg.com/736x/6a/e6/97/6ae6975a377c974ffacc1b979ba75ba3.jpg
+                            {% elif event.title == 'Fashion Show'  %}https://i.pinimg.com/736x/9d/45/60/9d4560df9f47ac863ea49dfa1a136c98.jpg
+                            {% elif event.title == 'Glam Up'  %}https://i.pinimg.com/736x/96/db/5e/96db5ea1e9e72b85ecd6b19298e6bb61.jpg
+                            {% elif event.title == 'Mehendi'  %}https://i.pinimg.com/736x/9f/1a/29/9f1a299bf3e51c5e6944ca6d36b467da.jpg
+                            {% elif event.title == 'Photography'  %}https://i.pinimg.com/736x/66/f1/e3/66f1e3ab1cf6e0044b7deeff1142b558.jpg
+                            {% elif event.title == 'Cooking Without Fire'  %}https://i.pinimg.com/736x/a8/ab/28/a8ab28528fbf4db8e9b9bc71ef7f72ef.jpg
+                            {% elif event.title == 'Treasure Hunt'  %}https://i.pinimg.com/736x/76/5d/97/765d97d834aa697dfcbdb38c869ec074.jpg
+                            {% elif event.title == 'Indo-Western Day'  %}https://i.pinimg.com/736x/e3/13/6c/e3136c2b678222dcca157cdf777e101f.jpg
+                            {% elif event.title == 'Bollywood Day'  %}https://i.pinimg.com/736x/ac/4d/7c/ac4d7cb8818d9967bc55ee478baf5784.jpg
+                            {% elif event.title == 'Group-Alike Day'  %}https://i.pinimg.com/736x/12/c2/cd/12c2cdbc569d18ee41d22a082865d055.jpg{% endif %}" class="card-img-top" alt="{{ event.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ event.title }}</h5>
+                                <p class="card-text text-muted">
+                                    <i class="far fa-calendar-alt"></i> {{ event.date|date:"F d, Y" }}
+                                </p> 
+                                <p class="card-text">{{ event.description|truncatechars:100 }}</p>
+                            </div>
+                            <div class="card-footer bg-white border-0">
+                                <a href="{% url 'event_detail' event.id %}" class="btn btn-primary">Know More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'event_list' %}" class="btn btn-outline-primary">View All Events</a>
+        </div>
+    </div>
+</section>
+
+<!-- Media Gallery Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3 title">Media Gallery</h2>
+                <p class="lead">Relive the moments from our previous cultural events</p>
+            </div>
+        </div>
+        
+        <div class="row media-gallery">
+            {% if media %}
+                {% for item in media %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="{% url 'media_detail' item.id %}" class="gallery-item">
+                                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text">{{ item.description|truncatechars:50 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'media_list' %}" class="btn btn-outline-primary">View Full Gallery</a>
+        </div>
+    </div>
+</section>
+
+<!-- Video Showcase Section -->
+<section class="video-showcase py-5">
+    <div class="container-fluid p-0 position-relative">
+        <div class="video-background">
+            <img src="{% static 'img/flashmob_backimage.jpg' %}" class="bg-image" alt="Cultural Performance">
+            <div class="overlay"></div>
+            <div class="container position-relative z-index-1">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center text-white mb-3 mt-4">
+                        <h2 class="display-4 mb-3" style="color: white">Watch Our Poster Reveal Ceremony</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+
+                        <div class="video-container mb-5">
+                            <video src="{% static 'img/flashmob_video.mp4' %}" muted loop autoplay></video>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3 title">Student Reviews</h2>
+                <p class="lead">Read what our students have to say about our events</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="star-rating mb-2" data-rating="{{ review.rating }}">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="card-text">{{ review.content|truncatechars:150 }}</p>
+                                <p class="card-text text-muted small">
+                                    - {{ review.user.first_name|default:review.user.username }}, {{ review.created_at|date:"F d, Y" }}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Event: <a href="{% url 'event_detail' review.event.id %}">{{ review.event.title }}</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>No reviews yet. Be the first to review an event!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Have Questions?</h2>
+        <p class="lead mb-4">Contact us for more information about our cultural events or for registration assistance.</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Contact Us</a>
+    </div>
+</section>
+{% endblock %}
